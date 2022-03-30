@@ -1,0 +1,251 @@
+{
+	"info": {
+		"_postman_id": "07e0ece1-4567-4aa1-9acf-561aff4b165c",
+		"name": "MiniAssignment1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GETUserID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The HTTP code is 200\" , () => {\r",
+							"    pm.response.to.have.status(200);  \r",
+							"})\r",
+							"pm.test('Response has a valid Content-Type header', function() {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');\r",
+							"});\r",
+							"pm.test(\"The response time is less than 400\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400,`Response time is : ${pm.response.responseTime}`)\r",
+							"})\r",
+							" \r",
+							"//loop throough the arr of objects and get the object with id = 40\r",
+							"userID = '';\r",
+							"resp = pm.response.json();\r",
+							"for(var i = 0 ; i < resp.length ; i++){\r",
+							"    if(resp[i].id == \"40\"){\r",
+							"        userID = resp[i].userId;\r",
+							"        break;\r",
+							"    }\r",
+							"}\r",
+							"pm.test(\"The id is correct.\",() => {\r",
+							"    pm.expect(userID === '4');\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostJob",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"name\", pm.iterationData.get(\"name\"))\r",
+							"pm.collectionVariables.set(\"job\", pm.iterationData.get(\"job\"))"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The HTTP code is 201\" , () => {\r",
+							"    pm.response.to.have.status(201);  \r",
+							"})\r",
+							"pm.test('Response has a valid Content-Type header', function() {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');\r",
+							"});\r",
+							"pm.test(\"The response time is less than 400\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400,`Response time is : ${pm.response.responseTime}`)\r",
+							"})\r",
+							" \r",
+							"pm.test(\"Added successfully.\", () => {\r",
+							"    pm.expect(pm.response.name === \"{{name}}\" && pm.response.job == \"{{job}}\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"{{name}}\",\r\n    \"job\":\"{{job}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PutJob",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The HTTP code is 200\" , () => {\r",
+							"    pm.response.to.have.status(200);  \r",
+							"})\r",
+							"pm.test('Response has a valid Content-Type header', function() {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');\r",
+							"});\r",
+							"pm.test(\"The response time is less than 400\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400,`Response time is : ${pm.response.responseTime}`)\r",
+							"})\r",
+							"pm.test(\"Updated successfully\", () => {\r",
+							"    pm.expect(pm.response.name === \"Arun\" && pm.response.job === \"Manager\")\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/ ",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						" "
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteJob",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The HTTP code is 200\" , () => {\r",
+							"    pm.response.to.have.status(200);  \r",
+							"})\r",
+							"pm.test('Response has a valid Content-Type header', function() {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');\r",
+							"});\r",
+							"pm.test(\"The response time is less than 400\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400,`Response time is : ${pm.response.responseTime}`)\r",
+							"})\r",
+							"pm.test(\"Deleted Successfully\", () => {\r",
+							"    pm.expect(!(pm.response === null))\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1 ",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1 "
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "job",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
