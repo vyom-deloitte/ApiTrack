@@ -1,8 +1,11 @@
+import io.restassured.response.Response;
+import org.json.JSONArray;
 import org.testng.annotations.Test;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 import org.testng.Assert;
@@ -14,12 +17,25 @@ public class RestAssuredMiniAssignment {
     @Test
     public void test_get_call(){
 
-        given().
-                baseUri("https://jsonplaceholder.typicode.com/posts").header("Content-Type","application/json").
+        RestAssured.useRelaxedHTTPSValidation();
+        Response response=given().
+                header("content-type","application/json").
                 when().
                 get("https://jsonplaceholder.typicode.com/posts").
                 then().
-                statusCode(200).body("userId[39]",equalTo(4)).body("title[39]",equalTo("enim quo cumque"));
+                statusCode(200).log().status().log().headers().extract().response();
+        assertThat(response.path("[39].userId"), is(equalTo(4)));
+        JSONArray arr = new JSONArray(response.asString());
+        int flag = 1;
+        for(int i=0;i<arr.length();i++){
+
+            Object obj = arr.getJSONObject(i).get("title");
+            if( !(obj instanceof String) ) {
+                flag = 0;
+                break;
+            }
+        }
+        assertThat(flag,is(equalTo(1)));
 
 
     }
