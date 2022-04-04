@@ -27,6 +27,8 @@ public class RestAssuredMiniAssignment2 {
         requestSpecification2 = RestAssured.with().spec(requestSpecBuilder2.build());
         responseSpecification = RestAssured.expect().
                 contentType(ContentType.JSON);
+        responseSpecification2=RestAssured.expect().
+                contentType(ContentType.JSON);
     }
     @Test
     public void test_get_call(){
@@ -39,8 +41,8 @@ public class RestAssuredMiniAssignment2 {
                         then().
                         spec(responseSpecification).statusCode(200).log().status().log().headers().
                         extract().response();
-        assertThat(response.path("[39].userId"), is(equalTo(4)));
-        JSONArray arr = new JSONArray(response.asString());
+        assertThat(response.path("[39].userId"), is(equalTo(4)));//Checking user with id 40 has userid 4
+        JSONArray arr = new JSONArray(response.asString());//checking every user contains title and its type is string
         int flag = 1;
         for(int i=0;i<arr.length();i++){
             Object obj = arr.getJSONObject(i).get("title");
@@ -62,6 +64,6 @@ public class RestAssuredMiniAssignment2 {
                 when().
                 put("/users").
                 then().
-                spec(responseSpecification).statusCode(200).log().status().log().body().log().headers();
+                spec(responseSpecification2).statusCode(200).log().status().log().body().log().headers();
     }
 }

@@ -2,14 +2,9 @@ import io.restassured.response.Response;
 import org.json.JSONArray;
 import org.testng.annotations.Test;
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
-
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-
-import org.testng.Assert;
-
 import java.io.File;
 
 public class RestAssuredMiniAssignment {
@@ -24,10 +19,10 @@ public class RestAssuredMiniAssignment {
                 get("https://jsonplaceholder.typicode.com/posts").
                 then().
                 statusCode(200).log().status().log().headers().extract().response();
-        assertThat(response.path("[39].userId"), is(equalTo(4)));
+        assertThat(response.path("[39].userId"), is(equalTo(4)));//Checking user with id 40 has userid 4
         JSONArray arr = new JSONArray(response.asString());
         int flag = 1;
-        for(int i=0;i<arr.length();i++){
+        for(int i=0;i<arr.length();i++){//checking every user contains title and its type is string
 
             Object obj = arr.getJSONObject(i).get("title");
             if( !(obj instanceof String) ) {
@@ -51,7 +46,7 @@ public class RestAssuredMiniAssignment {
                        put("/users").
                 then().
                        statusCode(200).body("name",equalTo("Arun")).body("job",equalTo("Manager"));
-
+//Check 'name ' and 'job' are updated with "Arun" and "Manager"
 
 
 
