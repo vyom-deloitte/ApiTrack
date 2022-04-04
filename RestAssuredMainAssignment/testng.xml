@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:\HUAPI\RestAssuredMainAssignment">
+        <classes>
+            <class name = "Base">
+                <methods>
+                    <include name="AuthenticationTest" />
+                </methods>
+            </class>
+            <class name="AddTaskTest">
+                <methods>
+                    <include name="AddTask" />
+                </methods>
+            </class>
+            <class name="UserValidationTest">
+                <methods>
+                    <include name="ValidateUser" />
+                </methods>
+            </class>
+            <class name="GetTaskTest">
+                <methods>
+                    <include name="getTask" />
+                </methods>
+            </class>
+            <class name="PaginationTest">
+                <methods>
+                    <include name="paginationFor2"/>
+                    <include name="paginationFor5"/>
+                    <include name="paginationFor10"/>
+                </methods>
+            </class>
+            <class name="InvalidAuthenticationTest">
+                <methods>
+                    <include name="InvalidAuthentication" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
